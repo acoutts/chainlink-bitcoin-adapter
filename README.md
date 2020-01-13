@@ -13,6 +13,10 @@ Below is the current status of supported RPC commands:
 - ❌ getblock
 - ❌ searchrawtransactions
 
+### TODO
+
+- Add support for other BTC clients (ex: bitcoind)
+
 # Prerequisites
 
 Make sure you have a btcd instance sync'd and the RPC enabled. You an get btcd here:
@@ -68,10 +72,6 @@ To run the container (note: make sure to escape special characters with a leadin
 docker run -it -e BTCD_RPC_HOST=127.0.0.1:8334 -e BTCD_RPC_USER=username -e BTCD_RPC_PASS=password -e BTCD_RPC_CERT=./rpc.cert -p 8080:8080 acoutts/chainlink-bitcoin-adapter
 ```
 
-Container also supports passing in CLI arguments.
-
-You can add and modify the keys to match what's specified in the API documentation.
-
 ### Usage
 
 ```
@@ -80,8 +80,7 @@ curl -X POST -H 'Content-Type: application/json' \
 {
 	"jobRunId": "1234",
 	"data": {
-		"function": "GLOBAL_QUOTE",
-		"symbol": "MSFT"
+		"rpc_command": "getBlockCount"
 	}
 }
 EOF
@@ -96,20 +95,49 @@ Response:
   "error": null,
   "pending": false,
   "data": {
-    "Global Quote": {
-      "01. symbol": "MSFT",
-      "02. open": "133.7900",
-      "03. high": "135.6500",
-      "04. low": "131.8284",
-      "05. price": "135.2800",
-      "06. volume": "26682074",
-      "07. latest trading day": "2019-08-07",
-      "08. previous close": "134.6900",
-      "09. change": "0.5900",
-      "10. change percent": "0.4380%"
-    },
-    "function": "GLOBAL_QUOTE",
-    "symbol": "MSFT"
+    "block_count": 612699,
+    "rpc_command": "getBlockCount"
+  }
+}
+```
+
+# RPC Reference
+
+## getBlockCount
+
+### Request:
+
+```
+"data": {
+  "rpc_command": "getBlockCount"
+}
+```
+
+### Response Success
+
+```json
+{
+  "jobRunId": "1234",
+  "status": "completed",
+  "error": null,
+  "pending": false,
+  "data": {
+    "block_count": 612699,
+    "rpc_command": "getBlockCount"
+  }
+}
+```
+
+### Response Error
+
+```json
+{
+  "jobRunId": "1234",
+  "status": "errored",
+  "error": "Unable to connect to btcd instance",
+  "pending": false,
+  "data": {
+    "rpc_command": "getBlockCount"
   }
 }
 ```
