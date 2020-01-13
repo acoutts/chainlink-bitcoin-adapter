@@ -5,10 +5,13 @@ Adapter that connects Chainlink oracle nodes to the bitcoin network faciliating 
 This allows Chainlink oracles to return information about BTC transactions and wallet addresses.
 
 Currently tested with btcd backend.
-Below is the current status of supported RPC commands and how to call them:
-| **RPC Command** | **Status** |
-|---------------|--------|
-| getblockcount | ✔️ |
+Below is the current status of supported RPC commands:
+
+- ✅ getblockcount
+- ❌ getdifficulty
+- ❌ getrawtransaction
+- ❌ getblock
+- ❌ searchrawtransactions
 
 # Prerequisites
 
@@ -59,7 +62,7 @@ BTCD_RPC_HOST=127.0.0.1:8334 BTCD_RPC_USER=username BTCD_RPC_PASS=password BTCD_
 
 #### Docker
 
-To run the container:
+To run the container (note: make sure to escape special characters with a leading `\`):
 
 ```
 docker run -it -e BTCD_RPC_HOST=127.0.0.1:8334 -e BTCD_RPC_USER=username -e BTCD_RPC_PASS=password -e BTCD_RPC_CERT=./rpc.cert -p 8080:8080 acoutts/chainlink-bitcoin-adapter
