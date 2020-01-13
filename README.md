@@ -19,23 +19,21 @@ Below is the current status of supported RPC commands:
 
 # Prerequisites
 
-Make sure you have a btcd instance sync'd and the RPC enabled. You an get btcd here:
+Make sure you have a btcd instance sync'd on mainnet and the RPC enabled. You an get btcd here:
 https://github.com/btcsuite/btcd
 
 To enable the RPC, ensure there's a `rpcuser` and `rpcpassword` defined in your `btcd.conf` file.
 
 You will also need a copy of `rpc.cert` from the btcd instance to be specified with the `BTCD_RPC_CERT` environment variable when running the adapter.
 
-### Configuration (btcd)
-
-Make sure the instance of btcd you're sending RPC requests was sync'd with the following configuration options enabled:
+Finally, make sure the instance of btcd you're sending RPC requests is sync'd with the following configuration options enabled:
 
 ```
 txindex=1
 addrindex=1
 ```
 
-### Contract Usage
+# Contract Usage
 
 To use this adapter on-chain, find a node that supports this adapter and build your request like so:
 
@@ -46,9 +44,9 @@ string[] memory copyPath = new string[](1);
 copyPath[0] = "block_count";
 ```
 
-### Setup Instructions
+# Setup Instructions
 
-#### Local Install
+## Local Install
 
 Make sure [Golang](https://golang.org/pkg/) is installed.
 
@@ -64,7 +62,7 @@ Then run the adapter:
 BTCD_RPC_HOST=127.0.0.1:8334 BTCD_RPC_USER=username BTCD_RPC_PASS=password BTCD_RPC_CERT=./rpc.cert ./chainlink-adapter-btcd
 ```
 
-#### Docker
+## Docker
 
 To run the container (note: make sure to escape special characters with a leading `\`):
 
@@ -72,7 +70,7 @@ To run the container (note: make sure to escape special characters with a leadin
 docker run -it -e BTCD_RPC_HOST=127.0.0.1:8334 -e BTCD_RPC_USER=username -e BTCD_RPC_PASS=password -e BTCD_RPC_CERT=./rpc.cert -p 8080:8080 acoutts/chainlink-bitcoin-adapter
 ```
 
-### Usage
+## Usage
 
 ```
 curl -X POST -H 'Content-Type: application/json' \
