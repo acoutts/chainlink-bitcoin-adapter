@@ -4,9 +4,11 @@ Adapter that connects Chainlink oracle nodes to the bitcoin network faciliating 
 
 This allows Chainlink oracles to return information about BTC transactions and wallet addresses.
 
-Currently tested with btcd.
-
-Built with [Bridges](https://github.com/linkpoolio/bridges).
+Currently tested with btcd backend.
+Below is the current status of supported RPC commands and how to call them:
+| **RPC Command** | **Status** |
+|---------------|--------|
+| getblockcount | ✔️ |
 
 # Prerequisites
 
@@ -32,11 +34,9 @@ To use this adapter on-chain, find a node that supports this adapter and build y
 
 ```
 Chainlink.Request memory req = buildChainlinkRequest(jobId, this, this.fulfill.selector);
-run.add("function", "BITCOIN_GET_BALANCE");
-run.add("address", "3ETRvx7Hzrmz2ySAbSK47hGKVuG4jFRwWe");
-string[] memory copyPath = new string[](2);
-copyPath[0] = "";
-copyPath[1] = "05. price";
+run.add("rpc_command", "getBlockcount");
+string[] memory copyPath = new string[](1);
+copyPath[0] = "block_count";
 ```
 
 ### Setup Instructions
@@ -62,7 +62,7 @@ BTCD_RPC_HOST=127.0.0.1:8334 BTCD_RPC_USER=username BTCD_RPC_PASS=password BTCD_
 To run the container:
 
 ```
-docker run -it -e API_KEY=apikey -p 8080:8080 linkpool/alphavantage-adapter
+docker run -it -e API_KEY=apikey -p 8080:8080 acoutts/chainlink-bitcoin-adapter
 ```
 
 Container also supports passing in CLI arguments.
