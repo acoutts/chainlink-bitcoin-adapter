@@ -1,5 +1,5 @@
 name: Bitcoin
-description: Adapter that connects Chainlink oracle nodes to the bitcoin network faciliating BTC JSON-RPC calls.
+description: Adapter that connects Chainlink oracle nodes to the bitcoin network faciliating BTC JSON-RPC calls
 node_identifier: bitcoin
 platforms:
   - Docker

@@ -9,10 +9,10 @@ ADD . .
 RUN make build
 
 # Copy adapter into a second stage container
-FROM alpine:latest
+# FROM alpine:latest
 
-RUN apk add --no-cache ca-certificates
-COPY --from=builder /go/src/github.com/acoutts/chainlink-bitcoin-adapter/chainlink-bitcoin-adapter /usr/local/bin/
+# RUN apk add --no-cache ca-certificates
+# COPY --from=builder /go/src/github.com/acoutts/chainlink-bitcoin-adapter/chainlink-bitcoin-adapter /usr/local/bin/
 
-EXPOSE 8080
-ENTRYPOINT ["chainlink-bitcoin-adapter"]
+# EXPOSE 8080
+# ENTRYPOINT ["chainlink-bitcoin-adapter"]

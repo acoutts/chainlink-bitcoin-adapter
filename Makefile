@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := build
 .PHONY: build install docker dockerpush
 
-REPO=acoutts/chainlink-adapter-btcd
+REPO=acoutts/chainlink-bitcoin-adapter
 LDFLAGS=-ldflags "-X $(REPO)/store.Sha=`git rev-parse HEAD`"
 
 build:
