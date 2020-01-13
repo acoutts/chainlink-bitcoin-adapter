@@ -3,7 +3,6 @@
 *.dll
 *.so
 *.dylib
-alpha-vantage-cl-ea
 
 # Test binary, build with `go test -c`
 *.test
@@ -22,3 +21,6 @@ vendor/
 
 # rpc.cert
 *.cert
+
+# Our build result
+chainlink-adapter-btcd

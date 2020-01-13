@@ -34,7 +34,7 @@ To use this adapter on-chain, find a node that supports this adapter and build y
 
 ```
 Chainlink.Request memory req = buildChainlinkRequest(jobId, this, this.fulfill.selector);
-run.add("rpc_command", "getBlockcount");
+run.add("rpc_command", "getBlockCount");
 string[] memory copyPath = new string[](1);
 copyPath[0] = "block_count";
 ```
@@ -62,7 +62,7 @@ BTCD_RPC_HOST=127.0.0.1:8334 BTCD_RPC_USER=username BTCD_RPC_PASS=password BTCD_
 To run the container:
 
 ```
-docker run -it -e API_KEY=apikey -p 8080:8080 acoutts/chainlink-bitcoin-adapter
+docker run -it -e BTCD_RPC_HOST=127.0.0.1:8334 -e BTCD_RPC_USER=username -e BTCD_RPC_PASS=password -e BTCD_RPC_CERT=./rpc.cert -p 8080:8080 acoutts/chainlink-bitcoin-adapter
 ```
 
 Container also supports passing in CLI arguments.
