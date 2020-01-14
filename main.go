@@ -20,6 +20,11 @@ func getBlockCount(client *rpcclient.Client) (int64, error) {
 	return client.GetBlockCount()
 }
 
+// getDifficulty returns the proof-of-work difficulty as a multiple of the minimum difficulty
+func getDifficulty(client *rpcclient.Client) (float64, error) {
+	return client.GetDifficulty()
+}
+
 // Run is called on each HTTP request
 func (btc *Bitcoin) Run(h *bridge.Helper) (interface{}, error) {
 	//Return object
@@ -55,12 +60,24 @@ func (btc *Bitcoin) Run(h *bridge.Helper) (interface{}, error) {
 	// Check rpc_command converting it to lowercase to make it case-insensitive
 	switch command := strings.ToLower(h.GetParam("rpc_command")); command {
 	case "getblockcount":
-		blockCount, err := getBlockCount(client)
-		if err != nil {
-			return nil, err
+		{
+			blockCount, err := getBlockCount(client)
+			if err != nil {
+				return nil, err
+			}
+
+			obj["block_count"] = blockCount
 		}
 
-		obj["block_count"] = blockCount
+	case "getdifficulty":
+		{
+			difficulty, err := getDifficulty(client)
+			if err != nil {
+				return nil, err
+			}
+
+			obj["difficulty"] = difficulty
+		}
 
 	default:
 		return nil, errors.New("Invalid or unsupported rpc_command specified")

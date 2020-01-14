@@ -4,14 +4,18 @@ Adapter that connects Chainlink oracle nodes to the bitcoin network faciliating 
 
 This allows Chainlink oracles to return information about BTC transactions and wallet addresses.
 
-Currently tested with btcd backend.
-Below is the current status of supported RPC commands:
+Supported RPC commands:
 
 - ✅ getblockcount
-- ❌ getdifficulty
+- ✅ getdifficulty
 - ❌ getrawtransaction
 - ❌ getblock
 - ❌ searchrawtransactions
+
+Supported BTC client backends:
+
+- ✅ btcd
+- ❌ bitcoind
 
 ### TODO
 
@@ -70,7 +74,9 @@ To run the container (note: make sure to escape special characters with a leadin
 docker run -it -e BTCD_RPC_HOST=127.0.0.1:8334 -e BTCD_RPC_USER=username -e BTCD_RPC_PASS=password -e BTCD_RPC_CERT=./rpc.cert -p 8080:8080 acoutts/chainlink-bitcoin-adapter
 ```
 
-## Usage
+## Usage Example (curl)
+
+Note: the rpc_command is case-insensitive.
 
 ```
 curl -X POST -H 'Content-Type: application/json' \
@@ -84,7 +90,7 @@ curl -X POST -H 'Content-Type: application/json' \
 EOF
 ```
 
-Response:
+## REST Response Example:
 
 ```json
 {
@@ -101,14 +107,27 @@ Response:
 
 # RPC Reference
 
-## getBlockCount
+Below is an overview of the supported RPC commands and their responses.
 
-### Request:
+# getBlockCount
+
+Returns the number of blocks in the longest block chain.
+
+### Request Data:
 
 ```
 "data": {
   "rpc_command": "getBlockCount"
 }
+```
+
+### Solidity Example
+
+```
+Chainlink.Request memory req = buildChainlinkRequest(jobId, this, this.fulfill.selector);
+run.add("rpc_command", "getBlockCount");
+string[] memory copyPath = new string[](1);
+copyPath[0] = "block_count";
 ```
 
 ### Response Success
@@ -136,6 +155,56 @@ Response:
   "pending": false,
   "data": {
     "rpc_command": "getBlockCount"
+  }
+}
+```
+
+# getDifficulty
+
+Returns the proof-of-work difficulty as a multiple of the minimum difficulty.
+
+### Request Data:
+
+```
+"data": {
+  "rpc_command": "getDifficulty"
+}
+```
+
+### Solidity Example
+
+```
+Chainlink.Request memory req = buildChainlinkRequest(jobId, this, this.fulfill.selector);
+run.add("rpc_command", "getDifficulty");
+string[] memory copyPath = new string[](1);
+copyPath[0] = "difficulty";
+```
+
+### Response Success
+
+```json
+{
+  "jobRunId": "1234",
+  "status": "completed",
+  "error": null,
+  "pending": false,
+  "data": {
+    "difficulty": 13798783827516.416,
+    "rpc_command": "getDifficulty"
+  }
+}
+```
+
+### Response Error
+
+```json
+{
+  "jobRunId": "1234",
+  "status": "errored",
+  "error": "Unable to connect to btcd instance",
+  "pending": false,
+  "data": {
+    "rpc_command": "getDifficulty"
   }
 }
 ```
