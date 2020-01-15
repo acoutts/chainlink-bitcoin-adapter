@@ -356,6 +356,8 @@ To get the block time from the result:
 ```
 Chainlink.Request memory req = buildChainlinkRequest(jobId, this, this.fulfill.selector);
 run.add("rpc_command", "getRawTransaction");
+run.add("tx_id", "ffb7421e996d7b922157d36d082a6acac0b8313822bd44b935439bc861996dd6")
+run.add("verbose", "true")
 string[] memory copyPath = new string[](2);
 copyPath[0] = "tx_raw";
 copyPath[1] = "blocktime";
