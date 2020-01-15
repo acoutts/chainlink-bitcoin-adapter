@@ -9,5 +9,6 @@ data_sources:
   - name: Bitcoin
     url: https://bitcoin.org/en/
 parameters:
+  - rpc_command
   - tx_id
-  - address
+  - verbose

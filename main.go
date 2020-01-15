@@ -8,6 +8,8 @@ import (
 	"os"
 	"strings"
 
+	"github.com/btcsuite/btcd/btcjson"
+	"github.com/btcsuite/btcd/chaincfg/chainhash"
 	"github.com/btcsuite/btcd/rpcclient"
 	"github.com/linkpoolio/bridges/bridge"
 )
@@ -15,14 +17,64 @@ import (
 // Bitcoin is the main object
 type Bitcoin struct{}
 
-// getBlockCount returns the current block count
+///////////////////////////////
+// getblockcount
+///////////////////////////////
+// Parameters
+// None
+///////////////////////////////
+// Description
+// Returns the number of blocks in the longest block chain.
+///////////////////////////////
 func getBlockCount(client *rpcclient.Client) (int64, error) {
 	return client.GetBlockCount()
 }
 
+///////////////////////////////
+// getdifficulty
+///////////////////////////////
+// Parameters
+// None
+///////////////////////////////
+// Description
+// Returns the proof-of-work difficulty as a multiple of the minimum difficulty.
+///////////////////////////////
 // getDifficulty returns the proof-of-work difficulty as a multiple of the minimum difficulty
 func getDifficulty(client *rpcclient.Client) (float64, error) {
 	return client.GetDifficulty()
+}
+
+///////////////////////////////
+// getrawtransaction
+///////////////////////////////
+// Parameters
+// 1. transaction hash (string, required) - the hash of the transaction
+// 2. verbose (int, optional, default=0) - specifies the transaction is returned as a JSON object instead of hex-encoded string
+///////////////////////////////
+// Description
+// Returns information about a transaction given its hash.
+///////////////////////////////
+type txResult struct {
+	rawTx *btcjson.TxRawResult
+	txHex string
+}
+
+func getRawTransaction(client *rpcclient.Client, txID *chainhash.Hash, verbose bool) (*txResult, error) {
+	var returnResult txResult
+
+	result, err := client.GetRawTransactionVerbose(txID)
+	if err != nil {
+		return &txResult{}, err
+	}
+
+	returnResult.txHex = result.Hex
+
+	if verbose {
+		// Put result into return object
+		returnResult.rawTx = result
+	}
+
+	return &returnResult, nil
 }
 
 // Run is called on each HTTP request
@@ -77,6 +129,26 @@ func (btc *Bitcoin) Run(h *bridge.Helper) (interface{}, error) {
 			}
 
 			obj["difficulty"] = difficulty
+		}
+
+	case "getrawtransaction":
+		{
+			txHash, err := chainhash.NewHashFromStr(h.GetParam("tx_id"))
+			if err != nil {
+				return nil, errors.New("Invalid tx_id specified")
+			}
+
+			verbose := h.GetParam("verbose") == "true"
+
+			txResult, err := getRawTransaction(client, txHash, verbose)
+			if err != nil {
+				return nil, err
+			}
+
+			if txResult.rawTx != nil {
+				obj["tx_raw"] = txResult.rawTx
+			}
+			obj["tx_hex"] = txResult.txHex
 		}
 
 	default:
