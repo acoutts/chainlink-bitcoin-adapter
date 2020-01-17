@@ -119,6 +119,205 @@ EOF
 }
 ```
 
+## Usage Example (JobSpec)
+
+Submit this as a job to run
+
+```json
+{
+  "initiators": [
+    {
+      "type": "runat",
+      "params": {
+        "time": "2019-09-20T12:20:00Z",
+        "ran": true
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "type": "bitcoin",
+      "confirmations": 0,
+      "params": {
+        "rpc_command": "getrawtransaction",
+        "tx_id": "96f4cfef79bedea7b389dd07dff5aaf491a8932ec7d5a2bd2d96dfbc916031ee",
+        "verbose": "true"
+      }
+    }
+  ],
+  "startAt": null,
+  "endAt": null
+}
+```
+
+It should return a result JSON like this:
+
+```json
+{
+  "id": "014f67c54b274503bdd73faa6e9c963f",
+  "jobId": "979dfa3c1cee40188cd450a683a41b94",
+  "result": {
+    "data": {
+      "rpc_command": "getrawtransaction",
+      "tx_hex": "010000000001018c2be8c4a8872dad66cd6e9cc1d8d36b8b04735f2d48710056c9eaa1c957ca390100000000ffffffff02eb3a8a0000000000160014f4095d233efcfea8a7005a20869eae7eb6a7d8f9e80300000000000017a914cac486d4e32224f429465c4664f6e1598344bdd1870248304502210094b3bac87d240d7ee9af8a748292f955a40182b63bb7aafefb05e976edc178c6022056ef4118bb4ea7dcc4d2cb423b414e4c4fb0f4e374c55159adb30c0be870f0940121023ec6a38c7696056b7cfd4fafa8c5717e9409bcc590c0650a6939ef15d564f92b00000000",
+      "tx_id": "96f4cfef79bedea7b389dd07dff5aaf491a8932ec7d5a2bd2d96dfbc916031ee",
+      "tx_raw": {
+        "blockhash": "00000000000000000010bf70a87dea443ebf75475b0cb4c05cca5d200b1a9142",
+        "blocktime": 1579104247,
+        "confirmations": 315,
+        "hash": "67785759f32a8b346cf3c72729302126077791f6909662e24c9c2842a6047f45",
+        "hex": "010000000001018c2be8c4a8872dad66cd6e9cc1d8d36b8b04735f2d48710056c9eaa1c957ca390100000000ffffffff02eb3a8a0000000000160014f4095d233efcfea8a7005a20869eae7eb6a7d8f9e80300000000000017a914cac486d4e32224f429465c4664f6e1598344bdd1870248304502210094b3bac87d240d7ee9af8a748292f955a40182b63bb7aafefb05e976edc178c6022056ef4118bb4ea7dcc4d2cb423b414e4c4fb0f4e374c55159adb30c0be870f0940121023ec6a38c7696056b7cfd4fafa8c5717e9409bcc590c0650a6939ef15d564f92b00000000",
+        "locktime": 0,
+        "size": 224,
+        "time": 1579104247,
+        "txid": "96f4cfef79bedea7b389dd07dff5aaf491a8932ec7d5a2bd2d96dfbc916031ee",
+        "version": 1,
+        "vin": [
+          {
+            "scriptSig": {
+              "asm": "",
+              "hex": ""
+            },
+            "sequence": 4294967295,
+            "txid": "39ca57c9a1eac9560071482d5f73048b6bd3d8c19c6ecd66ad2d87a8c4e82b8c",
+            "txinwitness": [
+              "304502210094b3bac87d240d7ee9af8a748292f955a40182b63bb7aafefb05e976edc178c6022056ef4118bb4ea7dcc4d2cb423b414e4c4fb0f4e374c55159adb30c0be870f09401",
+              "023ec6a38c7696056b7cfd4fafa8c5717e9409bcc590c0650a6939ef15d564f92b"
+            ],
+            "vout": 1
+          }
+        ],
+        "vout": [
+          {
+            "n": 0,
+            "scriptPubKey": {
+              "addresses": ["bc1q7sy46ge7lnl23fcqtgsgd84w06m20k8e4zz7ea"],
+              "asm": "0 f4095d233efcfea8a7005a20869eae7eb6a7d8f9",
+              "hex": "0014f4095d233efcfea8a7005a20869eae7eb6a7d8f9",
+              "reqSigs": 1,
+              "type": "witness_v0_keyhash"
+            },
+            "value": 0.09059051
+          },
+          {
+            "n": 1,
+            "scriptPubKey": {
+              "addresses": ["3LB9rCxg5d7ynhGAm9nxVTxzm2qw8f359s"],
+              "asm": "OP_HASH160 cac486d4e32224f429465c4664f6e1598344bdd1 OP_EQUAL",
+              "hex": "a914cac486d4e32224f429465c4664f6e1598344bdd187",
+              "reqSigs": 1,
+              "type": "scripthash"
+            },
+            "value": 0.00001
+          }
+        ],
+        "vsize": 142,
+        "weight": 566
+      },
+      "verbose": "true"
+    },
+    "error": null
+  },
+  "status": "completed",
+  "taskRuns": [
+    {
+      "id": "d67424cade0445cb8e58bceb0b396a8f",
+      "result": {
+        "data": {
+          "rpc_command": "getrawtransaction",
+          "tx_hex": "010000000001018c2be8c4a8872dad66cd6e9cc1d8d36b8b04735f2d48710056c9eaa1c957ca390100000000ffffffff02eb3a8a0000000000160014f4095d233efcfea8a7005a20869eae7eb6a7d8f9e80300000000000017a914cac486d4e32224f429465c4664f6e1598344bdd1870248304502210094b3bac87d240d7ee9af8a748292f955a40182b63bb7aafefb05e976edc178c6022056ef4118bb4ea7dcc4d2cb423b414e4c4fb0f4e374c55159adb30c0be870f0940121023ec6a38c7696056b7cfd4fafa8c5717e9409bcc590c0650a6939ef15d564f92b00000000",
+          "tx_id": "96f4cfef79bedea7b389dd07dff5aaf491a8932ec7d5a2bd2d96dfbc916031ee",
+          "tx_raw": {
+            "blockhash": "00000000000000000010bf70a87dea443ebf75475b0cb4c05cca5d200b1a9142",
+            "blocktime": 1579104247,
+            "confirmations": 315,
+            "hash": "67785759f32a8b346cf3c72729302126077791f6909662e24c9c2842a6047f45",
+            "hex": "010000000001018c2be8c4a8872dad66cd6e9cc1d8d36b8b04735f2d48710056c9eaa1c957ca390100000000ffffffff02eb3a8a0000000000160014f4095d233efcfea8a7005a20869eae7eb6a7d8f9e80300000000000017a914cac486d4e32224f429465c4664f6e1598344bdd1870248304502210094b3bac87d240d7ee9af8a748292f955a40182b63bb7aafefb05e976edc178c6022056ef4118bb4ea7dcc4d2cb423b414e4c4fb0f4e374c55159adb30c0be870f0940121023ec6a38c7696056b7cfd4fafa8c5717e9409bcc590c0650a6939ef15d564f92b00000000",
+            "locktime": 0,
+            "size": 224,
+            "time": 1579104247,
+            "txid": "96f4cfef79bedea7b389dd07dff5aaf491a8932ec7d5a2bd2d96dfbc916031ee",
+            "version": 1,
+            "vin": [
+              {
+                "scriptSig": {
+                  "asm": "",
+                  "hex": ""
+                },
+                "sequence": 4294967295,
+                "txid": "39ca57c9a1eac9560071482d5f73048b6bd3d8c19c6ecd66ad2d87a8c4e82b8c",
+                "txinwitness": [
+                  "304502210094b3bac87d240d7ee9af8a748292f955a40182b63bb7aafefb05e976edc178c6022056ef4118bb4ea7dcc4d2cb423b414e4c4fb0f4e374c55159adb30c0be870f09401",
+                  "023ec6a38c7696056b7cfd4fafa8c5717e9409bcc590c0650a6939ef15d564f92b"
+                ],
+                "vout": 1
+              }
+            ],
+            "vout": [
+              {
+                "n": 0,
+                "scriptPubKey": {
+                  "addresses": ["bc1q7sy46ge7lnl23fcqtgsgd84w06m20k8e4zz7ea"],
+                  "asm": "0 f4095d233efcfea8a7005a20869eae7eb6a7d8f9",
+                  "hex": "0014f4095d233efcfea8a7005a20869eae7eb6a7d8f9",
+                  "reqSigs": 1,
+                  "type": "witness_v0_keyhash"
+                },
+                "value": 0.09059051
+              },
+              {
+                "n": 1,
+                "scriptPubKey": {
+                  "addresses": ["3LB9rCxg5d7ynhGAm9nxVTxzm2qw8f359s"],
+                  "asm": "OP_HASH160 cac486d4e32224f429465c4664f6e1598344bdd1 OP_EQUAL",
+                  "hex": "a914cac486d4e32224f429465c4664f6e1598344bdd187",
+                  "reqSigs": 1,
+                  "type": "scripthash"
+                },
+                "value": 0.00001
+              }
+            ],
+            "vsize": 142,
+            "weight": 566
+          },
+          "verbose": "true"
+        },
+        "error": null
+      },
+      "status": "completed",
+      "task": {
+        "ID": 2,
+        "CreatedAt": "2020-01-17T11:22:51.955138437-05:00",
+        "UpdatedAt": "2020-01-17T11:22:51.955138437-05:00",
+        "DeletedAt": null,
+        "type": "bitcoin",
+        "confirmations": 0,
+        "params": {
+          "rpc_command": "getrawtransaction",
+          "tx_id": "96f4cfef79bedea7b389dd07dff5aaf491a8932ec7d5a2bd2d96dfbc916031ee",
+          "verbose": "true"
+        }
+      },
+      "minimumConfirmations": null,
+      "confirmations": null
+    }
+  ],
+  "createdAt": "2020-01-17T11:22:51.965404161-05:00",
+  "finishedAt": "2020-01-17T11:22:52.138462225-05:00",
+  "updatedAt": "2020-01-17T11:22:52.139800526-05:00",
+  "creationHeight": null,
+  "observedHeight": null,
+  "overrides": {},
+  "initiator": {
+    "type": "runat",
+    "params": {
+      "time": "2019-09-20T12:20:00Z",
+      "ran": true
+    }
+  }
+}
+```
+
 # RPC Reference
 
 Below is an overview of the supported RPC commands and their responses.
