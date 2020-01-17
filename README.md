@@ -65,8 +65,20 @@ make build
 Then run the adapter:
 
 ```
-BTCD_RPC_HOST=127.0.0.1:8334 BTCD_RPC_USER=username BTCD_RPC_PASS=password BTCD_RPC_CERT=./rpc.cert ./chainlink-adapter-btcd
+LISTEN_PORT=8080 BTCD_RPC_HOST=127.0.0.1:8334 BTCD_RPC_USER=username BTCD_RPC_PASS=password BTCD_RPC_CERT=./rpc.cert ./chainlink-adapter-btcd
 ```
+
+**Environment Variables**
+
+`LISTEN_PORT` Which port the REST API listens on for Chainlink daemon to call in from.
+
+`BTCD_RPC_HOST` Specify host:port of btcd instance
+
+`BTCD_RPC_USER` Specify RPC username for btcd
+
+`BTCD_RPC_PASS` Specify RPC password for btcd
+
+`BTCD_RPC_CERT` Path to RPC cert for btcd
 
 ## Docker
 

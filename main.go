@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/btcsuite/btcd/btcjson"
@@ -173,5 +174,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	// Start the HTTP server
-	bridge.NewServer(&Bitcoin{}).Start(8080)
+	port, err := strconv.Atoi(os.Getenv("LISTEN_PORT"))
+	if err != nil {
+		port = 8080
+	}
+
+	bridge.NewServer(&Bitcoin{}).Start(port)
 }
