@@ -9,12 +9,12 @@ contract ATestnetConsumer is ChainlinkClient, Ownable {
   uint256 public currentPrice;
   int256 public changeDay;
   bytes32 public lastMarket;
-  uint32 public blockTime;
+//   int public blockTime;
   
-  event RequestBlockTimeFulfilled(
-      bytes32 indexed requestId
-      uint32 indexed blockTime
-  );
+//   event RequestBlockTimeFulfilled(
+//     bytes32 indexed requestId,
+//     int indexed time
+//   );
 
   event RequestEthereumPriceFulfilled(
     bytes32 indexed requestId,
@@ -34,18 +34,19 @@ contract ATestnetConsumer is ChainlinkClient, Ownable {
   constructor() public Ownable() {
     setPublicChainlinkToken();
   }
+ 
   
-  function requestBlockTime(address _oracle, string _jobId, int32 blockNum)
-    public
-    onlyOwner
-  {
-    Chainlink.Request memory req = buildChainlinkRequest(stringToBytes32(_jobId), this, this.fulfillBlockTime.selector);
-    req.add("rpc_command", "getRawTransaction");
-    req.add("tx_id", "ffb7421e996d7b922157d36d082a6acac0b8313822bd44b935439bc861996dd6");
-    req.add("verbose", "true");
-    req.add("copyPath", "tx_row.blocktime");
-    sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
-  }
+//   function requestBlockTime(address _oracle, string _jobId)
+//     public
+//     onlyOwner
+//   {
+//     Chainlink.Request memory req = buildChainlinkRequest(stringToBytes32(_jobId), this, this.fulfillBlockTime.selector);
+//     req.add("rpc_command", "getRawTransaction");
+//     req.add("tx_id", "96f4cfef79bedea7b389dd07dff5aaf491a8932ec7d5a2bd2d96dfbc916031ee");
+//     req.add("verbose", "true");
+//     req.add("copyPath", "tx_row.blocktime");
+//     sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
+//   }
 
   function requestEthereumPrice(address _oracle, string _jobId)
     public
@@ -84,13 +85,13 @@ contract ATestnetConsumer is ChainlinkClient, Ownable {
     sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
   }
   
-  function fulfillBlockTime(bytes32 _requestId, int32 _blockTime)
-    public
-    recordChainlinkFulfillment(_requestId)
-  {
-    emit RequestBlockTimeFulfilled(_requestId, _blockTime)
-    blockTime = _blockTime;
-  }
+//   function fulfillBlockTime(bytes32 _requestId, int _block_time)
+//     public
+//     recordChainlinkFulfillment(_requestId)
+//   {
+//     emit RequestBlockTimeFulfilled(_requestId, _block_time);
+//     blockTime = _block_time;
+//   }
 
   function fulfillEthereumPrice(bytes32 _requestId, uint256 _price)
     public
