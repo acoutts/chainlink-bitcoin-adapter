@@ -6,9 +6,6 @@ import "https://github.com/smartcontractkit/chainlink/evm/contracts/vendor/Ownab
 contract ATestnetConsumer is ChainlinkClient, Ownable {
   uint256 constant private ORACLE_PAYMENT = 1 * LINK;
 
-  uint256 public currentPrice;
-  int256 public changeDay;
-  bytes32 public lastMarket;
   int public blockTime;
   
   event RequestBlockTimeFulfilled(
@@ -28,7 +25,7 @@ contract ATestnetConsumer is ChainlinkClient, Ownable {
     req.add("rpc_command", "getRawTransaction");
     req.add("tx_id", _tx_id);
     req.add("verbose", "true");
-    req.add("path", _path);
+    req.add("copyPath", _path);
     sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
   }
   
