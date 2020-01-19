@@ -52,7 +52,7 @@ address _oracle, string _jobId, string _tx_id, string _path
 Example (replace oracle, jobId, and tx_id with your values):
 
 ```
-0x671f9d685d02fccC69C93AceE0E3ED2930Fb6972, acfb1adbefd646639bc5688ddf52b8c6,  96f4cfef79bedea7b389dd07dff5aaf491a8932ec7d5a2bd2d96dfbc916031ee, tx_raw.blocktime
+0x671f9d685d02fccC69C93AceE0E3ED2930Fb6972, acfb1adbefd646639bc5688ddf52b8c6,  96f4cfef79bedea7b389dd07dff5aaf491a8932ec7d5a2bd2d96dfbc916031ee, tx.blocktime
 ```
 
 ## JSON result
@@ -117,9 +117,8 @@ Example (replace oracle, jobId, and tx_id with your values):
           "dataPrefix": "0x3bbad9971300df3c3cddca0cc9b407d9f72469fb098fac2c03fa9825dc3b3bf10000000000000000000000000000000000000000000000000de0b6b3a7640000000000000000000000000000db619553b2fcd33017df31e24236847161143e1ebef52c0100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005e23ba5c",
           "functionSelector": "0x4ab0d190",
           "rpc_command": "getRawTransaction",
-          "tx_hex": "010000000001018c2be8c4a8872dad66cd6e9cc1d8d36b8b04735f2d48710056c9eaa1c957ca390100000000ffffffff02eb3a8a0000000000160014f4095d233efcfea8a7005a20869eae7eb6a7d8f9e80300000000000017a914cac486d4e32224f429465c4664f6e1598344bdd1870248304502210094b3bac87d240d7ee9af8a748292f955a40182b63bb7aafefb05e976edc178c6022056ef4118bb4ea7dcc4d2cb423b414e4c4fb0f4e374c55159adb30c0be870f0940121023ec6a38c7696056b7cfd4fafa8c5717e9409bcc590c0650a6939ef15d564f92b00000000",
           "tx_id": "96f4cfef79bedea7b389dd07dff5aaf491a8932ec7d5a2bd2d96dfbc916031ee",
-          "tx_raw": {
+          "tx": {
             "blockhash": "00000000000000000010bf70a87dea443ebf75475b0cb4c05cca5d200b1a9142",
             "blocktime": 1579104247,
             "confirmations": 499,
@@ -171,8 +170,7 @@ Example (replace oracle, jobId, and tx_id with your values):
             ],
             "vsize": 142,
             "weight": 566
-          },
-          "verbose": "true"
+          }
         },
         "error": null
       },
@@ -303,8 +301,7 @@ Example (replace oracle, jobId, and tx_id with your values):
     "dataPrefix": "0x3bbad9971300df3c3cddca0cc9b407d9f72469fb098fac2c03fa9825dc3b3bf10000000000000000000000000000000000000000000000000de0b6b3a7640000000000000000000000000000db619553b2fcd33017df31e24236847161143e1ebef52c0100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005e23ba5c",
     "functionSelector": "0x4ab0d190",
     "rpc_command": "getRawTransaction",
-    "tx_id": "96f4cfef79bedea7b389dd07dff5aaf491a8932ec7d5a2bd2d96dfbc916031ee",
-    "verbose": "true"
+    "tx_id": "96f4cfef79bedea7b389dd07dff5aaf491a8932ec7d5a2bd2d96dfbc916031ee"
   },
   "payment": "1000000000000000000",
   "initiator": {

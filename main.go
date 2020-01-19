@@ -50,32 +50,42 @@ func getDifficulty(client *rpcclient.Client) (float64, error) {
 ///////////////////////////////
 // Parameters
 // 1. transaction hash (string, required) - the hash of the transaction
-// 2. verbose (int, optional, default=0) - specifies the transaction is returned as a JSON object instead of hex-encoded string
 ///////////////////////////////
 // Description
 // Returns information about a transaction given its hash.
 ///////////////////////////////
-type txResult struct {
-	rawTx *btcjson.TxRawResult
-	txHex string
-}
-
-func getRawTransaction(client *rpcclient.Client, txID *chainhash.Hash, verbose bool) (*txResult, error) {
-	var returnResult txResult
-
+func getRawTransaction(client *rpcclient.Client, txID *chainhash.Hash, verbose bool) (*btcjson.TxRawResult, error) {
 	result, err := client.GetRawTransactionVerbose(txID)
 	if err != nil {
-		return &txResult{}, err
+		return &btcjson.TxRawResult{}, err
 	}
 
-	returnResult.txHex = result.Hex
+	return result, nil
+}
 
-	if verbose {
-		// Put result into return object
-		returnResult.rawTx = result
+///////////////////////////////
+// getblock
+///////////////////////////////
+// Parameters
+// 1. block_num (string, required) - the number of the block
+///////////////////////////////
+// Description
+// Returns information about a transaction given its hash.
+///////////////////////////////
+func getBlock(client *rpcclient.Client, blockNum int64, verbose bool, verboseTx bool) (*btcjson.GetBlockVerboseResult, error) {
+	// First get block hash of the given block num
+	blockHash, err := client.GetBlockHash(blockNum)
+	if err != nil {
+		return &btcjson.GetBlockVerboseResult{}, err
 	}
 
-	return &returnResult, nil
+	// Get the block result JSON object
+	result, err := client.GetBlockVerboseTx(blockHash)
+	if err != nil {
+		return &btcjson.GetBlockVerboseResult{}, err
+	}
+
+	return result, nil
 }
 
 // Run is called on each HTTP request
@@ -139,17 +149,24 @@ func (btc *Bitcoin) Run(h *bridge.Helper) (interface{}, error) {
 				return nil, errors.New("Invalid tx_id specified")
 			}
 
-			verbose := h.GetParam("verbose") == "true"
-
-			txResult, err := getRawTransaction(client, txHash, verbose)
+			// Hard-coded verbose result
+			txResult, err := getRawTransaction(client, txHash, true)
 			if err != nil {
 				return nil, err
 			}
 
-			if txResult.rawTx != nil {
-				obj["tx_raw"] = txResult.rawTx
+			obj["tx"] = txResult
+		}
+
+	case "getblock":
+		{
+			// Hard-coded verbose result
+			blockResult, err := getBlock(client, h.GetIntParam("block_num"), true, true)
+			if err != nil {
+				return nil, err
 			}
-			obj["tx_hex"] = txResult.txHex
+
+			obj["block"] = blockResult
 		}
 
 	default:

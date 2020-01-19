@@ -7,7 +7,7 @@ contract ATestnetConsumer is ChainlinkClient, Ownable {
   uint256 constant private ORACLE_PAYMENT = 1 * LINK;
 
   int public blockTime;
-  
+
   event RequestBlockTimeFulfilled(
     bytes32 indexed requestId,
     int indexed time
@@ -16,7 +16,7 @@ contract ATestnetConsumer is ChainlinkClient, Ownable {
   constructor() public Ownable() {
     setPublicChainlinkToken();
   }
-  
+
   function requestBlockTime(address _oracle, string _jobId, string _tx_id, string _path)
     public
     onlyOwner
@@ -24,11 +24,10 @@ contract ATestnetConsumer is ChainlinkClient, Ownable {
     Chainlink.Request memory req = buildChainlinkRequest(stringToBytes32(_jobId), this, this.fulfillBlockTime.selector);
     req.add("rpc_command", "getRawTransaction");
     req.add("tx_id", _tx_id);
-    req.add("verbose", "true");
     req.add("copyPath", _path);
     sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
   }
-  
+
   function fulfillBlockTime(bytes32 _requestId, int _block_time)
     public
     recordChainlinkFulfillment(_requestId)
