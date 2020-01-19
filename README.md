@@ -4,6 +4,8 @@ Adapter that connects Chainlink oracle nodes to the bitcoin network faciliating 
 
 This allows Chainlink oracles to return information about BTC transactions and wallet addresses.
 
+Solidity implementation examples available in the `examples` directory
+
 ### Supported commands:
 
 - ✅ getBlockCount (return current block_num)
