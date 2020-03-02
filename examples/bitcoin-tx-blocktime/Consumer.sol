@@ -17,14 +17,14 @@ contract ATestnetConsumer is ChainlinkClient, Ownable {
     setPublicChainlinkToken();
   }
 
-  function requestBlockTime(address _oracle, string _jobId, string _tx_id, string _path)
+  function requestBlockTime(address _oracle, string _jobId, string _tx_id)
     public
     onlyOwner
   {
     Chainlink.Request memory req = buildChainlinkRequest(stringToBytes32(_jobId), this, this.fulfillBlockTime.selector);
     req.add("rpc_command", "getRawTransaction");
     req.add("tx_id", _tx_id);
-    req.add("copyPath", _path);
+    req.add("copyPath", "tx.blockTime");
     sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
   }
 
